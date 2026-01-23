@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Junction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="logo">Campus Junction</div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Categories</a>
+      <a href="#">Shops</a>
+      <a href="#">Deals</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="search-login">
+      <input type="text" placeholder="Search products..." id="searchInput">
+      <button class="btn login">Login</button>
+      <button class="btn register">Register</button>
+    </div>
+    <div class="hamburger">&#9776;</div>
+  </header>
+
+  <!-- Hero Carousel -->
+  <section class="hero">
+    <div class="carousel">
+      <div class="slide active" style="background-image: url('https://via.placeholder.com/800x400/FFB347/0C1F2D?text=Campus+Junction+is+Live!');">
+        <div class="overlay">
+          <h1>Campus Junction is Live!</h1>
+          <button class="btn cta">Shop Now</button>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://via.placeholder.com/800x400/FFDDC1/0C1F2D?text=Lecture+Halls+to+Local+Hustles');">
+        <div class="overlay">
+          <h1>From Lecture Halls to Local Hustles</h1>
+          <button class="btn cta">Explore Categories</button>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://via.placeholder.com/800x400/0F9D8A/0C1F2D?text=Student+Power+Meets+Marketplace');">
+        <div class="overlay">
+          <h1>Student Power Meets Marketplace Magic</h1>
+          <button class="btn cta">Join Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div>10K+ Products</div>
+      <div>500+ Shops</div>
+      <div>50K+ Students</div>
+      <div>⭐ 4.9 Rating</div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products">
+    <h2>Explore Products</h2>
+    <div class="category-tabs">
+      <button class="active">All</button>
+      <button>Electronics</button>
+      <button>Fashion</button>
+      <button>Books</button>
+      <button>Food</button>
+      <button>Services</button>
+    </div>
+    <div class="product-grid">
+      <!-- Product Card Template -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product">
+        <h3>Product Name</h3>
+        <p class="shop-name">Shop XYZ</p>
+        <p class="price">KSh 1,200</p>
+        <div class="actions">
+          <button class="chat">💬</button>
+          <button class="call">📞</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product">
+        <h3>Product Name</h3>
+        <p class="shop-name">Shop ABC</p>
+        <p class="price">KSh 800</p>
+        <div class="actions">
+          <button class="chat">💬</button>
+          <button class="call">📞</button>
+        </div>
+      </div>
+      <!-- Repeat cards as needed -->
+    </div>
+  </section>
+
+  <!-- Ads Wall -->
+  <section class="ads-wall">
+    <div class="main-banner">
+      <h2>Flash Sale!</h2>
+      <p>Ends in <span id="countdown">00:10:00</span></p>
+    </div>
+    <div class="side-banners">
+      <div class="banner">🎁 First Order Bonus</div>
+      <div class="banner">🚚 Free Delivery</div>
+    </div>
+    <div class="referral-banner">
+      Invite Friends. Earn Rewards.
+    </div>
+  </section>
+
+  <!-- Shops Section -->
+  <section class="shops">
+    <h2>Local Hustle Spotlight</h2>
+    <div class="shop-grid">
+      <div class="shop-card">
+        <img src="https://via.placeholder.com/150" alt="Shop">
+        <span class="badge open">Open</span>
+        <h3>Shop ABC</h3>
+        <p>Electronics</p>
+        <p>Location: Campus Road</p>
+        <p>⭐ 4.5</p>
+        <p>9 AM - 8 PM</p>
+        <button class="btn visit">Visit Shop</button>
+      </div>
+      <div class="shop-card">
+        <img src="https://via.placeholder.com/150" alt="Shop">
+        <span class="badge closed">Closed</span>
+        <h3>Shop XYZ</h3>
+        <p>Fashion</p>
+        <p>Location: Main Street</p>
+        <p>⭐ 4.8</p>
+        <p>10 AM - 6 PM</p>
+        <button class="btn visit">Visit Shop</button>
+      </div>
+      <!-- Repeat cards as needed -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="newsletter">
+        <h3>Join Our Newsletter</h3>
+        <input type="email" placeholder="Your email">
+        <button class="btn">Subscribe</button>
+      </div>
+      <div class="quick-links">
+        <h3>Quick Links</h3>
+        <a href="#">Home</a>
+        <a href="#">Categories</a>
+        <a href="#">Shops</a>
+        <a href="#">Deals</a>
+      </div>
+      <div class="contact">
+        <h3>Contact</h3>
+        <p>Email: info@campusjunction.com</p>
+        <p>Phone: +254 700 000 000</p>
+        <div class="social">
+          <span>🐦</span><span>📘</span><span>📸</span>
+        </div>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Campus Junction. All rights reserved.</p>
+  </footer>
+
+  <!-- Bottom Mobile Nav -->
+  <nav class="bottom-nav">
+    <button>🏠</button>
+    <button>🔍</button>
+    <button>🎁</button>
+    <button>🛒</button>
+    <button>👤</button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
