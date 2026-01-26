@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Updated index.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -201,3 +202,208 @@ fetchProducts();
 </script>
 </body>
 </html>
+=======
+<!-- Updated index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Junction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #e6b812;
+  --secondary: #ed0e2c;
+  --bg-light: #f9f9f9;
+  --text-dark: #111;
+  --glass: rgba(255,255,255,0.15);
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+* { box-sizing:border-box; margin:0; padding:0; font-family: var(--font-body); }
+body { background-color: var(--bg-light); color: var(--text-dark); }
+
+/* Navbar */
+nav {
+  position: sticky; top:0; width:100%; background: var(--glass);
+  backdrop-filter: blur(10px); display:flex; justify-content: space-between;
+  align-items:center; padding:0.5rem 2rem; z-index:1000;
+}
+nav .logo { font-family: var(--font-heading); font-size:1.5rem; color: var(--primary); font-weight:700; }
+nav .links { display:flex; gap:1rem; align-items:center; }
+nav .links a { text-decoration:none; color: var(--text-dark); font-weight:600; transition:0.3s; }
+nav .links a:hover { color: var(--primary); }
+nav .search-login { display:flex; gap:1rem; align-items:center; }
+nav .search-login input { padding:0.4rem 0.8rem; border-radius:5px; border:1px solid #ccc; }
+nav .search-login button { background: var(--primary); color:#fff; border:none; padding:0.5rem 1rem; border-radius:5px; cursor:pointer; transition:0.3s; }
+nav .search-login button:hover { background: var(--secondary); }
+
+/* Hero Carousel */
+.hero { position:relative; overflow:hidden; }
+.hero .slides { display:flex; transition:0.5s; }
+.hero .slide { min-width:100%; display:flex; justify-content: center; align-items:center; flex-direction: column; background: linear-gradient(120deg, var(--primary), var(--secondary)); color:#fff; height:60vh; text-align:center; }
+.hero .slide h1 { font-family: var(--font-heading); font-size:2.5rem; margin-bottom:1rem; }
+.hero .slide p { font-size:1.2rem; margin-bottom:1.5rem; }
+.hero .slide button { margin:0.5rem; padding:0.7rem 1.5rem; border:none; border-radius:5px; cursor:pointer; font-weight:600; transition:0.3s; }
+.hero .slide button:first-child { background:#fff; color:var(--primary); }
+.hero .slide button:last-child { background:var(--secondary); color:#fff; }
+.hero .stats { display:flex; justify-content:center; gap:2rem; margin-top:1rem; font-weight:600; }
+
+/* Products */
+.products { padding:2rem; text-align:center; }
+.products h2 { font-family: var(--font-heading); font-size:2rem; margin-bottom:1rem; }
+.products .filters { margin-bottom:1.5rem; display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+.products .filters button { padding:0.5rem 1rem; border:none; border-radius:5px; cursor:pointer; background: var(--glass); transition:0.3s; }
+.products .filters button.active, .products .filters button:hover { background: var(--primary); color:#fff; }
+.products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+.card { background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:0.3s; position:relative; }
+.card img { width:100%; height:180px; object-fit:cover; }
+.card .shop-badge { position:absolute; top:10px; left:10px; width:40px; height:40px; border-radius:50%; border:2px solid #fff; overflow:hidden; }
+.card .shop-badge img { width:100%; height:100%; object-fit:cover; }
+.card .info { padding:1rem; text-align:left; }
+.card .info h3 { font-family: var(--font-heading); margin-bottom:0.3rem; }
+.card .info p { font-size:0.9rem; color:#666; margin-bottom:0.5rem; }
+.card .info .price { font-weight:600; color:var(--secondary); }
+.card .buttons { display:flex; justify-content:space-between; margin-top:0.5rem; }
+.card .buttons button { flex:1; margin:0.1rem; padding:0.5rem; border:none; border-radius:5px; cursor:pointer; font-size:0.85rem; transition:0.3s; }
+.card .buttons button.add { background: var(--primary); color:#fff; }
+.card .buttons button.contact { background: var(--secondary); color:#fff; }
+.card:hover { transform: translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.15); }
+
+/* Mobile */
+@media(max-width:768px){ .products-grid { grid-template-columns: repeat(2,1fr); } .hero .stats { flex-direction:column; gap:0.5rem; } }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo">Campus Junction</div>
+  <div class="links">
+    <a href="#">Home</a>
+    <a href="category.html">Categories</a>
+    <a href="shops.html">Shops</a>
+    <a href="offer.html">Offers</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="search-login">
+    <input type="text" placeholder="Search products or shops...">
+    <button>Login</button>
+    <button>Register</button>
+  </div>
+</nav>
+
+<!-- Hero Carousel -->
+<section class="hero">
+  <div class="slides">
+    <div class="slide">
+      <h1>Big Campus Deals!</h1>
+      <p>Find the best student products at amazing prices.</p>
+      <button>Shop Now</button>
+      <button>View Categories</button>
+      <div class="stats">10K+ Products | 500+ Shops | 50K+ Students | 4.9 Rating</div>
+    </div>
+    <div class="slide">
+      <h1>Fashion & Gadgets</h1>
+      <p>Trendy clothes, latest electronics, and more.</p>
+      <button>Shop Now</button>
+      <button>View Categories</button>
+      <div class="stats">10K+ Products | 500+ Shops | 50K+ Students | 4.9 Rating</div>
+    </div>
+    <div class="slide">
+      <h1>Flash Sales Every Week!</h1>
+      <p>Don't miss out on exclusive discounts and offers.</p>
+      <button>Shop Now</button>
+      <button>View Categories</button>
+      <div class="stats">10K+ Products | 500+ Shops | 50K+ Students | 4.9 Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="products">
+  <h2>Featured Products</h2>
+  <div class="filters">
+    <button class="active">All</button>
+    <button>Electronics</button>
+    <button>Fashion</button>
+    <button>Books</button>
+    <button>Food</button>
+    <button>Services</button>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- Products will be loaded here -->
+  </div>
+</section>
+
+<!-- JS -->
+<script>
+// Hero Carousel
+let slideIndex = 0;
+const slides = document.querySelectorAll('.hero .slide');
+function showSlides(){
+  slides.forEach(s => s.style.display='none');
+  slideIndex++;
+  if(slideIndex > slides.length) slideIndex = 1;
+  slides[slideIndex-1].style.display='flex';
+  setTimeout(showSlides,5000);
+}
+showSlides();
+
+// Token helper
+function getToken() {
+  return localStorage.getItem('authToken');
+}
+
+// Fetch products from backend
+async function fetchProducts() {
+  try {
+    const res = await fetch('http://localhost:5000/api/public/products'); // your backend endpoint
+    const products = await res.json();
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = '';
+
+    products.forEach(product => {
+      const firstImage = product.images?.[0]?.url || 'https://via.placeholder.com/300';
+      const shopBadge = product.shop ? `<div class="shop-badge"><img src="${product.shop.logo || 'https://via.placeholder.com/40'}" alt="${product.shop.name}"></div>` : '';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        ${shopBadge}
+        <img src="${firstImage}" alt="${product.name}">
+        <div class="info">
+          <h3>${product.name}</h3>
+          <p>Category: ${product.category || 'N/A'}</p>
+          <p>Shop: ${product.shop?.name || 'N/A'}</p>
+          <p>Location: ${product.shop?.location || 'N/A'}</p>
+          <p class="price">${product.price} KSh</p>
+          <p>${product.description || ''}</p>
+          <div class="buttons">
+            <button class="add">Add to Cart</button>
+            <button class="contact">Contact Seller</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+
+      // Protect Contact Seller
+      const contactBtn = card.querySelector('.contact');
+      contactBtn.addEventListener('click', ()=>{
+        if(!getToken()){
+          window.location.href = '/login.html';
+        } else {
+          window.location.href = `/contact-seller.html?product=${product._id}`;
+        }
+      });
+    });
+  } catch(err) { console.error(err); }
+}
+fetchProducts();
+</script>
+</body>
+</html>
+>>>>>>> 5277b47e50a3e949defd7189bca5c65535b7cc43
