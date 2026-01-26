@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curved Navbar with Perfect Notch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #FF6A3D;
+  --glass: rgba(255, 255, 255, 0.15);
+  --text-dark: #333;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f0f0f0;
+}
+
+/* --- Bottom Navbar --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+}
+
+/* SVG navbar with notch */
+.bottom-nav svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Nav links container */
+.nav-links {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+/* Nav links */
+.nav-links a {
+  color: var(--text-dark);
+  font-size: 1.4rem;
+  text-align: center;
+  width: 50px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover { color: var(--primary); }
+
+/* --- Floating Messages Button --- */
+.message-btn {
+  position: fixed;
+  bottom: 0; /* sits perfectly inside notch */
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  width: 60px;
+  height: 60px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  z-index: 1000;
+  animation: float 2s ease-in-out infinite;
+  transition: transform 0.3s;
+}
+
+.message-btn:hover {
+  transform: translateX(-50%) translateY(-10px) scale(1.1);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(-10px); }
+  50% { transform: translateX(-50%) translateY(-16px); }
+}
+
+/* Badge */
+.message-btn .badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+}
+</style>
+</head>
+<body>
+
+<!-- Bottom Navbar -->
+<div class="bottom-nav">
+  <!-- SVG for perfect notch -->
+  <svg viewBox="0 0 400 70" xmlns="http://www.w3.org/2000/svg">
+    <!-- Path: straight top border with perfect downward semicircle notch for 60px button -->
+    <path d="
+      M0 0 
+      H170 
+      C180 0, 180 60, 200 60
+      C220 60, 220 0, 230 0
+      H400 
+      V70 
+      H0 
+      V0 
+      Z" fill="transparent" stroke="black" stroke-width="2"/>
+  </svg>
+
+  <!-- Nav links -->
+  <div class="nav-links">
+    <a href="#"><i class="fas fa-home"></i></a>
+    <a href="#"><i class="fas fa-search"></i></a>
+    <div style="width:60px"></div> <!-- space for button -->
+    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+    <a href="#"><i class="fas fa-user"></i></a>
+  </div>
+</div>
+
+<!-- Floating Message Button -->
+<div class="message-btn">
+  <i class="fas fa-comment"></i>
+  <span class="badge">3</span>
+</div>
+
+</body>
+</html>

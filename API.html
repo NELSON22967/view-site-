@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text" class="text" placeholder="Enter your token name">
+    <button onclick="generate()">Generate</button>
+    <p class="mess" id="mess"></p>
+
+    <script>
+        function generate(){
+            const text=document.getElementById('text').value
+            const mess=document.getElementById('mess')
+
+            //check null entries 
+            if(!text){
+                mess.textContent='Enter key name $4token provided'
+            }else{
+               const num=[1,2,3,4,5,6,7,8,9,0]
+               const letters=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+                
+
+               //selector engine $4token retuner
+               const selector=letters[Math.floor(Math.random()*letters.length)]
+               mess.textContent=`${text.charAt(0).toLowerCase()}&&${selector}`
+            }
+            
+
+            //reset input
+             const texts=document.getElementById('text').value=''
+        }
+    </script>
+</body>
+</html>
