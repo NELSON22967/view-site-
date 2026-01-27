@@ -340,14 +340,14 @@ async function loadUser(){
 // Password update (PUT, no response handling)
 document.getElementById('passwordForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const oldPassword = e.target.oldPassword.value;
+  const  currentPassword = e.target.oldPassword.value;
   const newPassword = e.target.newPassword.value;
 
   try{
     await fetch('https://campusbackend-bq3r.onrender.com/api/auth/update-password', {
       method:'PUT',
       headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${token}` },
-      body: JSON.stringify({ oldPassword, newPassword })
+      body: JSON.stringify({  currentPassword, newPassword })
     });
     alert("Password update request sent.");
     e.target.reset();
@@ -363,4 +363,5 @@ loadUser();
 
 </body>
 </html>
+
 
