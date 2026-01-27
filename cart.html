@@ -353,10 +353,18 @@ footer button { padding:0.5rem 1rem; border:none; border-radius:5px; background:
 <!-- JS -->
 <!-- JS -->
 <script>
-// Load cart from localStorage
-let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+// Get user token
+const token = localStorage.getItem('token');
+if (!token) {
+  alert("Please log in to access your cart!");
+  window.location.href = "login.html";
+}
 
-// Fetch product details from backend
+// Use a token-based key so each user has a separate cart
+const CART_KEY = `cart_${token}`;
+let cartItems = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+
+// Backend API
 const API = "http://localhost:5000/api/public/products"; // your backend route
 
 async function loadCart() {
@@ -405,14 +413,14 @@ async function loadCart() {
 // Update quantity
 function updateQty(id, qty){
   cartItems = cartItems.map(item=>item.id===id ? {...item, qty: parseInt(qty)} : item);
-  localStorage.setItem('cart', JSON.stringify(cartItems));
+  localStorage.setItem(CART_KEY, JSON.stringify(cartItems));
   loadCart();
 }
 
 // Remove item
 function removeItem(id){
   cartItems = cartItems.filter(item=>item.id!==id);
-  localStorage.setItem('cart', JSON.stringify(cartItems));
+  localStorage.setItem(CART_KEY, JSON.stringify(cartItems));
   loadCart();
 }
 
@@ -430,6 +438,7 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
 // Initial render
 loadCart();
 </script>
+
 
 </body>
 </html>

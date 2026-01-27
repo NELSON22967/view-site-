@@ -320,6 +320,7 @@ footer {
 </div>
 <script>
 const API_BASE = "https://campusbackend-bq3r.onrender.com/api/public";
+const token = localStorage.getItem('token'); // user login token
 
 async function loadProducts() {
   try {
@@ -338,18 +339,15 @@ async function loadProducts() {
       grid.innerHTML += `
         <div class="card">
           <img src="${imgSrc}" />
-
           <div class="info">
             <h4>${product.name}</h4>
             <p class="price">KES ${product.price}</p>
-
             <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
-              <button onclick='addToCart("${product._id}")'
+              <button onclick='handleAddToCart("${product._id}")'
                 style="flex:1; padding:6px; background:#FF6A3D; color:#fff; border:none; border-radius:6px;">
                 🛒 Add to Cart
               </button>
-
-              <button onclick="contactSeller('${product.seller._id}')"
+              <button onclick="handleContactSeller('${product.seller._id}')"
                 style="flex:1; padding:6px; background:#333; color:#fff; border:none; border-radius:6px;">
                 💬 Contact
               </button>
@@ -365,11 +363,11 @@ async function loadProducts() {
   }
 }
 
-/* ===== ADD TO CART ===== */
-function addToCart(product) {
-  const token = localStorage.getItem('token'); // user's login token
+/* ===== TOKEN-PROTECTED ACTIONS ===== */
+function handleAddToCart(productId) {
+  const token = localStorage.getItem('token');
   if (!token) {
-    alert("Please login to add products to cart!");
+    alert("You must be logged in to add products to cart!");
     window.location.href = "login.html";
     return;
   }
@@ -377,27 +375,31 @@ function addToCart(product) {
   const CART_KEY = `cart_${token}`;
   let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
 
-  // Check if product already exists in cart
-  const existing = cart.find(item => item.id === product._id);
+  const existing = cart.find(item => item.id === productId);
   if (existing) {
-    existing.qty += 1; // increase quantity
+    existing.qty += 1;
   } else {
-    cart.push({
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      qty: 1,
-      image: product.images?.[0]?.url || ''
-    });
+    const productEl = document.querySelector(`button[onclick='handleAddToCart("${productId}")']`).closest('.card');
+    const name = productEl.querySelector('h4').innerText;
+    const price = parseInt(productEl.querySelector('.price').innerText.replace('KES ', ''));
+    const image = productEl.querySelector('img').src;
+
+    cart.push({ id: productId, name, price, qty: 1, image });
   }
 
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   alert("Product added to cart 🛒");
 }
 
+function handleContactSeller(sellerId) {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert("You must be logged in to contact the seller!");
+    window.location.href = "login.html";
+    return;
+  }
 
-/* ===== CONTACT SELLER ===== */
-function contactSeller(sellerId) {
+  // Redirect to chat page with seller ID
   window.location.href = `chat.html?seller=${sellerId}`;
 }
 
