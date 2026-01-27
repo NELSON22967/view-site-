@@ -328,7 +328,7 @@ function showSection(id){
 // Load user info
 async function loadUser(){
   try{
-    const res = await fetch('https://sellerdashboard-440f.onrender.com/api/auth/me',{
+    const res = await fetch('https://campusbackend-bq3r.onrender.com/api/auth/me',{
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const user = await res.json();
@@ -363,3 +363,4 @@ loadUser();
 
 </body>
 </html>
+
