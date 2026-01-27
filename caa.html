@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Junction - Cart</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #e6b812;
+  --secondary: #E8734A;
+  --bg-light: #f9f9f9;
+  --text-dark: #111;
+  --glass: rgba(255,255,255,0.15);
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+* { box-sizing:border-box; margin:0; padding:0; font-family: var(--font-body); }
+body { background-color: var(--bg-light); color: var(--text-dark); }
+
+/* Navbar */
+nav {
+  position: sticky; top:0; width:100%; background: var(--glass); backdrop-filter: blur(10px);
+  display:flex; justify-content: space-between; align-items:center; padding:0.5rem 2rem; z-index:1000;
+}
+nav .logo { font-family: var(--font-heading); font-size:1.5rem; color: var(--primary); font-weight:700; }
+nav .links { display:flex; gap:1rem; align-items:center; }
+nav .links a { text-decoration:none; color: var(--text-dark); font-weight:600; transition:0.3s; }
+nav .links a:hover { color: var(--primary); }
+nav .search-login { display:flex; gap:1rem; align-items:center; }
+nav .search-login input { padding:0.4rem 0.8rem; border-radius:5px; border:1px solid #ccc; }
+nav .search-login button { background: var(--primary); color:#fff; border:none; padding:0.5rem 1rem; border-radius:5px; cursor:pointer; transition:0.3s; }
+nav .search-login button:hover { background: var(--secondary); }
+
+/* Page Heading */
+.page-heading { text-align:center; padding:2rem 1rem; font-family: var(--font-heading); font-size:2rem; color:var(--primary); }
+
+/* Cart Table */
+.cart-container { max-width:1000px; margin:2rem auto; background:#fff; border-radius:10px; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+.cart-table { width:100%; border-collapse: collapse; }
+.cart-table th, .cart-table td { padding:1rem; text-align:center; border-bottom:1px solid #eee; }
+.cart-table img { width:80px; height:80px; object-fit:cover; border-radius:5px; }
+.cart-table input[type=number] { width:50px; padding:0.3rem; border:1px solid #ccc; border-radius:5px; }
+.cart-table button { background:var(--secondary); color:#fff; border:none; padding:0.4rem 0.8rem; border-radius:5px; cursor:pointer; transition:0.3s; }
+.cart-table button:hover { background:var(--primary); }
+
+/* Total Section */
+.total-section { text-align:right; margin-top:1rem; font-size:1.2rem; font-weight:600; }
+.checkout-btn { margin-top:0.5rem; padding:0.7rem 1.5rem; background:var(--primary); color:#fff; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+.checkout-btn:hover { background:var(--secondary); }
+
+/* Footer */
+footer { background:#111; color:#fff; padding:2rem; display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem; }
+footer h3 { font-family: var(--font-heading); margin-bottom:1rem; }
+footer a { color:#fff; text-decoration:none; display:block; margin-bottom:0.3rem; }
+footer input { padding:0.5rem; border-radius:5px; border:none; margin-right:0.5rem; }
+footer button { padding:0.5rem 1rem; border:none; border-radius:5px; background: var(--primary); color:#fff; cursor:pointer; }
+
+/* Mobile Bottom Nav */
+.bottom-nav { position:fixed; bottom:0; width:100%; background:var(--glass); backdrop-filter:blur(10px); display:flex; justify-content:space-around; padding:0.5rem 0; border-top:1px solid #ccc; }
+.bottom-nav a { color:var(--text-dark); text-align:center; font-size:0.9rem; transition:0.3s; }
+.bottom-nav a:hover { color:var(--primary); }
+.bottom-nav i { display:block; font-size:1.2rem; margin-bottom:0.2rem; }
+
+/* Responsive */
+@media(max-width:768px){ .cart-table th, .cart-table td { padding:0.5rem; font-size:0.9rem; } }
+/* ===== Mobile Responsiveness ===== */
+@media (max-width: 768px) {
+  .cart-container {
+    padding: 0.5rem;
+    margin: 1rem;
+  }
+
+  .cart-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .cart-table thead {
+    display: none; /* hide table headers on mobile */
+  }
+
+  .cart-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+
+  .cart-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  .cart-table tbody td img {
+    width: 60px;
+    height: 60px;
+    margin-right: 0.5rem;
+  }
+
+  .cart-table tbody td button {
+    padding: 0.3rem 0.6rem;
+  }
+
+  .cart-table tbody td input[type=number] {
+    width: 50px;
+  }
+
+  .total-section {
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.7rem 0;
+  }
+
+  nav .links {
+    display: none; /* optionally hide links, or use a hamburger menu */
+  }
+
+  .bottom-nav {
+    padding: 0.8rem 0;
+  }
+}
+/* ======================================================
+   MOBILE CURVED BOTTOM NAV
+   ====================================================== */
+
+/* Hide by default (desktop & tablet) */
+.bottom-nav,
+.message-btn {
+  display: none;
+}
+
+/* --- Bottom Navbar --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+}
+
+/* SVG border */
+.bottom-nav svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Nav links container */
+.nav-links {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+/* Nav icons */
+.nav-links a {
+  color: var(--text-dark);
+  font-size: 1.4rem;
+  width: 50px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+/* --- Floating Messages Button --- */
+.message-btn {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  border: 2px solid var(--primary);
+  z-index: 1000;
+}
+
+/* Badge */
+.message-btn .badge {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= MOBILE ONLY ================= */
+@media (max-width:770px) {
+
+  /* Show curved nav ONLY on mobile */
+  .bottom-nav,
+  .message-btn {
+    display: flex;
+  }
+
+  body {
+    padding-bottom: 95px;
+  }
+
+  nav .links {
+    display: none;
+  }
+
+  /* Products → 2 per row */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products {
+    padding: 1rem;
+  }
+  .sign-up{
+     border:none;
+     background-color:var(--primary);
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo">Campus Junction</div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="shops.html">Shops</a>
+    <a href="categories.html">Categories</a>
+    <a href="offers.html">Offers</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="search-login">
+    <button><a href="login.html">Sign in</a></button>
+    
+  </div>
+</nav>
+
+<!-- Page Heading -->
+<div class="page-heading">Your Cart</div>
+
+<!-- Cart Table -->
+<div class="cart-container">
+  <table class="cart-table" id="cartTable">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Shop</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Cart items inserted dynamically -->
+    </tbody>
+  </table>
+
+  <div class="total-section">
+    Total: $<span id="totalAmount">0</span><br>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <h3>Newsletter</h3>
+    <input type="email" placeholder="Your email"><button>Subscribe</button>
+  </div>
+  <div>
+    <h3>Quick Links</h3>
+    <a href="index.html">Home</a>
+    <a href="shops.html">Shops</a>
+    <a href="category.html">Categories</a>
+    <a href="offers.html">Offers</a>
+  </div>
+  <div>
+    <h3>Support</h3>
+    <a href="#">Contact</a>
+    <a href="#">FAQ</a>
+    <a href="#">Terms</a>
+  </div>
+  <div>
+    <h3>Follow Us</h3>
+    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+  </div>
+</footer>
+
+<!-- Mobile Bottom Nav -->
+<div class="bottom-nav">
+  <a href="index.html"><i class="fas fa-home"></i>Home</a>
+  <a href="#"><i class="fas fa-search"></i>Search</a>
+  <a href="#"><i class="fas fa-tag"></i>Offers</a>
+  <a href="#"><i class="fas fa-shopping-cart"></i>Cart</a>
+  <a href="#"><i class="fas fa-user"></i>Profile</a>
+</div>
+
+<!-- JS -->
+<!-- JS -->
+<script>
+// Load cart from localStorage
+let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Fetch product details from backend
+const API = "http://localhost:5000/api/public/products"; // your backend route
+
+async function loadCart() {
+  if (!cartItems.length) {
+    document.querySelector('#cartTable tbody').innerHTML = `<tr><td colspan="6">Your cart is empty 🛒</td></tr>`;
+    document.getElementById('totalAmount').innerText = '0';
+    return;
+  }
+
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error("Failed to fetch products");
+    const products = await res.json();
+
+    const tbody = document.querySelector('#cartTable tbody');
+    tbody.innerHTML = '';
+    let total = 0;
+
+    cartItems.forEach(ci => {
+      const p = products.find(prod => prod._id === ci.id);
+      if (!p) return; // skip if product not found
+
+      const subtotal = p.price * ci.qty;
+      total += subtotal;
+
+      tbody.innerHTML += `
+        <tr>
+          <td><img src="${p.images && p.images.length ? p.images[0].url : 'https://via.placeholder.com/80'}" alt="${p.name}"> ${p.name}</td>
+          <td>${p.seller.name}</td>
+          <td>KES ${p.price}</td>
+          <td><input type="number" min="1" value="${ci.qty}" onchange="updateQty('${ci.id}', this.value)"></td>
+          <td>KES ${subtotal}</td>
+          <td><button onclick="removeItem('${ci.id}')"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `;
+    });
+
+    document.getElementById('totalAmount').innerText = total;
+
+  } catch (err) {
+    console.error(err);
+    document.querySelector('#cartTable tbody').innerHTML = `<tr><td colspan="6">Failed to load cart</td></tr>`;
+  }
+}
+
+// Update quantity
+function updateQty(id, qty){
+  cartItems = cartItems.map(item=>item.id===id ? {...item, qty: parseInt(qty)} : item);
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  loadCart();
+}
+
+// Remove item
+function removeItem(id){
+  cartItems = cartItems.filter(item=>item.id!==id);
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  loadCart();
+}
+
+// Checkout button
+document.querySelector('.checkout-btn').addEventListener('click', () => {
+  if (!cartItems.length) {
+    alert("Your cart is empty!");
+    return;
+  }
+  // Placeholder for checkout functionality
+  alert("Proceeding to checkout...");
+  // Optionally, redirect: window.location.href = 'checkout.html';
+});
+
+// Initial render
+loadCart();
+</script>
+
+</body>
+</html>
