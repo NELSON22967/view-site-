@@ -84,13 +84,12 @@ nav button {
 
 /* ================= HERO ================= */
 .hero {
-  height: 55vh;
+  height: auto;
   background: linear-gradient(120deg, var(--primary), var(--secondary));
   color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+ text-align: center;
+ padding:2px;
+  
 }
 
 /* ================= PRODUCTS ================= */
@@ -258,6 +257,165 @@ footer {
      background-color:var(--primary);
   }
 }
+
+ /* Adds styling */
+:root {
+  --glass-bg: rgba(255,255,255,0.15);
+  --neon: #00ffe0;
+  --neon-pink: #ff4fd8;
+}
+
+
+
+/* ===== SLIDER ===== */
+.slider {
+  position: relative;
+  max-width: 1100px;
+  margin:2rem auto 2rem;
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  background: var(--glass-bg);
+  box-shadow:
+    0 0 40px rgba(0,255,224,0.15),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
+    margin-bottom:9px;
+}
+
+.slides {
+  position: relative;
+  height: 320px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity .8s ease, transform 1.2s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide img,
+.slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide video {
+  pointer-events: none;
+}
+
+/* ===== OVERLAY TEXT ===== */
+.slide-text {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(0,255,224,.4);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all .8s ease;
+}
+
+.slide.active .slide-text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ===== NAV ===== */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  font-size: 2rem;
+  background: rgba(0,0,0,.5);
+  color: white;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.prev { left: 14px; }
+.next { right: 14px; }
+
+/* ===== DOTS ===== */
+.dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.4);
+  cursor: pointer;
+}
+
+.dot.active {
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon);
+}
+
+@media (max-width: 700px) {
+  .slides { height: 220px; }
+}
+
+/* ===== EXTRA MOBILE RESPONSIVENESS ===== */
+@media (max-width: 480px) {
+  .slider {
+    margin: 1rem;
+    border-radius: 14px;
+  }
+
+  .slides {
+    height: 180px;
+  }
+
+  .slide-text {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    bottom: 14px;
+    left: 14px;
+  }
+
+  .nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.6rem;
+  }
+
+  .dots {
+    bottom: 10px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .slides { height: 150px; }
+  .slide-text { font-size: 0.75rem; }
+}
 </style>
 </head>
 
@@ -281,6 +439,12 @@ footer {
   <div>
     <h1>Campus Deals Made Easy</h1>
     <p>Shop smart. Shop local.</p>
+    <div class="slider" id="slider">
+  <div class="slides" id="slides"></div>
+  <button class="nav-btn prev">‹</button>
+  <button class="nav-btn next">›</button>
+  <div class="dots" id="dots"></div>
+</div>
   </div>
 </section>
 
@@ -309,7 +473,7 @@ footer {
     <a href="index.html"><i class="fas fa-home"></i></a>
     <a href="category.html"><i class="fas fa-layer-group"></i></a>
     <div style="width:60px"></div>
-    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    <a href="search.html"><i class="fas fa-search"></i></a>
     <a href="account.html"><i class="fas fa-user"></i></a>
   </div>
 </div>
@@ -320,35 +484,49 @@ footer {
 </div>
 <script>
 const API_BASE = "https://campusbackend-bq3r.onrender.com/api/public";
-const token = localStorage.getItem('token'); // user login token
+
+let LAST_PRODUCTS_HASH = "";
 
 async function loadProducts() {
   try {
-    const res = await fetch(`${API_BASE}/products`);
+    const res = await fetch(`${API_BASE}/products`, {
+      headers: { "Accept": "application/json" }
+    });
+
     if (!res.ok) throw new Error("Failed to fetch products");
 
     const products = await res.json();
+
+    // Detect changes
+    const hash = JSON.stringify(
+      products.map(p => ({
+        id: p._id,
+        price: p.price,
+        img: p.images?.[0]?.url
+      }))
+    );
+
+    if (hash === LAST_PRODUCTS_HASH) return;
+    LAST_PRODUCTS_HASH = hash;
+
     const grid = document.querySelector(".products-grid");
     grid.innerHTML = "";
 
     products.forEach(product => {
+           console.log(product)
       const imgSrc = product.images?.length
         ? product.images[0].url
         : "https://picsum.photos/300/200";
 
       grid.innerHTML += `
         <div class="card">
-          <img src="${imgSrc}" />
+          <img  onclick="handleproductroute('${product._id}')" src="${imgSrc}">
           <div class="info">
             <h4>${product.name}</h4>
             <p class="price">KES ${product.price}</p>
             <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
-              <button onclick='handleAddToCart("${product._id}")'
-                style="flex:1; padding:6px; background:#FF6A3D; color:#fff; border:none; border-radius:6px;">
-                🛒 Add to Cart
-              </button>
-              <button onclick="handleContactSeller('${product.seller._id}')"
-                style="flex:1; padding:6px; background:#333; color:#fff; border:none; border-radius:6px;">
+             <button onclick="handleContactSeller('${product.seller?._id}')"
+                style="flex:1;padding:6px;background:#333;color:#fff;border:none;border-radius:6px;">
                 💬 Contact
               </button>
             </div>
@@ -357,53 +535,166 @@ async function loadProducts() {
       `;
     });
 
+  
+
   } catch (err) {
-    console.error(err);
-    alert("Unable to load products");
+    console.error("AJAX error:", err);
   }
 }
 
-/* ===== TOKEN-PROTECTED ACTIONS ===== */
-function handleAddToCart(productId) {
-  const token = localStorage.getItem('token');
+/* TOKEN-PROTECTED ACTIONS */
+function handleAddToCart(id) {
+  const token = localStorage.getItem("token");
   if (!token) {
-    alert("You must be logged in to add products to cart!");
+    alert("Login required");
     window.location.href = "login.html";
     return;
   }
-
-  const CART_KEY = `cart_${token}`;
-  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-
-  const existing = cart.find(item => item.id === productId);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    const productEl = document.querySelector(`button[onclick='handleAddToCart("${productId}")']`).closest('.card');
-    const name = productEl.querySelector('h4').innerText;
-    const price = parseInt(productEl.querySelector('.price').innerText.replace('KES ', ''));
-    const image = productEl.querySelector('img').src;
-
-    cart.push({ id: productId, name, price, qty: 1, image });
-  }
-
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  alert("Product added to cart 🛒");
+  alert("Added to cart");
 }
 
-function handleContactSeller(sellerId) {
-  const token = localStorage.getItem('token');
+function handleContactSeller(id) {
+  const token = localStorage.getItem("token");
   if (!token) {
-    alert("You must be logged in to contact the seller!");
+    alert("Login required");
     window.location.href = "login.html";
     return;
   }
-
-  // Redirect to chat page with seller ID
-  window.location.href = `chat.html?seller=${sellerId}`;
+  window.location.href = `chat.html?seller=${id}`;
 }
 
+function handleproductroute(id){
+    const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Login required");
+    window.location.href = "login.html";
+    return;
+  }
+  window.location.href = `view.html?product=${id}`;
+}
+
+/* INITIAL LOAD + KEEP ALIVE */
 loadProducts();
+setInterval(loadProducts, 15000);
+
+/* ================= TEMP DATA (SIMULATES BACKEND) ================= */
+const slidesData = [
+  {
+    type: "image",
+    src: "https://picsum.photos/id/1015/1200/600",
+    text: "🔥 Hot Campus Deals",
+    duration: 3500
+  },
+  {
+    type: "video",
+    src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    text: "🎥 Video Promotions",
+    duration: 6000
+  },
+  {
+    type: "image",
+    src: "https://picsum.photos/id/1035/1200/600",
+    text: "✨ Neon Student Marketplace",
+    duration: 4000
+  }
+];
+
+const slidesEl = document.getElementById('slides');
+const dotsEl = document.getElementById('dots');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+
+let index = 0;
+let timer;
+
+/* ===== BUILD SLIDES (LAZY LOAD) ===== */
+slidesData.forEach((s, i) => {
+  const slide = document.createElement('div');
+  slide.className = 'slide';
+
+  if (s.type === 'image') {
+    slide.innerHTML = `<img loading="lazy" data-src="${s.src}">`;
+  } else {
+    slide.innerHTML = `<video muted loop preload="none"><source src="${s.src}" type="video/mp4"></video>`;
+  }
+
+  slide.innerHTML += `<div class="slide-text">${s.text}</div>`;
+  slidesEl.appendChild(slide);
+
+  const dot = document.createElement('span');
+  dot.className = 'dot';
+  dot.onclick = () => goToSlide(i);
+  dotsEl.appendChild(dot);
+});
+
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+/* ===== SHOW SLIDE ===== */
+function showSlide(i) {
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+
+  const slide = slides[i];
+  slide.classList.add('active');
+  dots[i].classList.add('active');
+
+  // lazy load image
+  const img = slide.querySelector('img[data-src]');
+  if (img) {
+    img.src = img.dataset.src;
+    img.removeAttribute('data-src');
+  }
+
+  // video control
+  slide.querySelectorAll('video').forEach(v => {
+    v.currentTime = 0;
+    v.play();
+  });
+
+  clearTimeout(timer);
+  timer = setTimeout(nextSlide, slidesData[i].duration);
+}
+
+function nextSlide() {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+}
+
+function prevSlide() {
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+}
+
+function goToSlide(i) {
+  index = i;
+  showSlide(index);
+}
+
+prevBtn.onclick = prevSlide;
+nextBtn.onclick = nextSlide;
+
+/* ===== TOUCH SWIPE INERTIA ===== */
+let startX = 0;
+let delta = 0;
+
+slidesEl.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  clearTimeout(timer);
+});
+
+slidesEl.addEventListener('touchmove', e => {
+  delta = e.touches[0].clientX - startX;
+});
+
+slidesEl.addEventListener('touchend', () => {
+  if (delta < -50) nextSlide();
+  if (delta > 50) prevSlide();
+  delta = 0;
+});
+
+/* INIT */
+showSlide(index);
 </script>
 
 

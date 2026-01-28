@@ -202,7 +202,7 @@ table th { background:#f2f2f2; }
 
 <!-- Navbar -->
 <nav>
-  <div class="logo">Seller Dashboard</div>
+  <div class="logo">Buyer Dashboard</div>
   <div class="links">
     <a href="index.html">Home</a>
     <a href="cart.html">Cart</a>
@@ -253,11 +253,11 @@ table th { background:#f2f2f2; }
           <i class="fas fa-store"></i>
           <p>Campus junction selling site</p>
         </div>
-        <div class="selling-card" onclick="window.open('https://sellerdashboard-440f.onrender.com/upload')">
+        <div class="selling-card" >
           <i class="fas fa-upload"></i>
           <p>products viewed</p>
         </div>
-        <div class="selling-card" onclick="window.open('https://sellerdashboard-440f.onrender.com/orders')">
+        <div class="selling-card")">
           <i class="fas fa-box"></i>
           <p>Orders</p>
         </div>
@@ -305,7 +305,7 @@ table th { background:#f2f2f2; }
     <a href="index.html"><i class="fas fa-home"></i></a>
     <a href="category.html"><i class="fas fa-layer-group"></i></a>
     <div style="width:60px"></div>
-    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    <a href="search.html"><i class="fas fa-search"></i></a>
     <a href="account.html"><i class="fas fa-user"></i></a>
   </div>
 </div>
@@ -328,7 +328,7 @@ function showSection(id){
 // Load user info
 async function loadUser(){
   try{
-    const res = await fetch('https://campusbackend-bq3r.onrender.com/api/auth/me',{
+    const res = await fetch('https://campusbackend-bq3r.onrender.com/api/public',{
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const user = await res.json();
@@ -340,14 +340,14 @@ async function loadUser(){
 // Password update (PUT, no response handling)
 document.getElementById('passwordForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const  currentPassword = e.target.oldPassword.value;
+  const oldPassword = e.target.oldPassword.value;
   const newPassword = e.target.newPassword.value;
 
   try{
     await fetch('https://campusbackend-bq3r.onrender.com/api/auth/update-password', {
       method:'PUT',
       headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${token}` },
-      body: JSON.stringify({  currentPassword, newPassword })
+      body: JSON.stringify({ oldPassword, newPassword })
     });
     alert("Password update request sent.");
     e.target.reset();
@@ -363,5 +363,3 @@ loadUser();
 
 </body>
 </html>
-
-

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Details</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #FF6A3D;
+  --secondary: rgb(240, 237, 97);
+  --glass: rgba(255,255,255,0.15);
+  --text-dark: #333;
+  --border-color: #000;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top,brown,rgb(235, 235, 224));
+  color: #fff;
+}
+
+/* ===== HEADER ===== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin: 0;
+}
+
+header a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin: 0.5rem 0;
+  color: var(--primary);
+}
+
+p { line-height: 1.5; margin: 0.3rem 0; }
+
+.price { font-size: 1.5rem; font-weight: bold; color: var(--secondary); margin: 0.5rem 0; }
+
+.contact-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 12px 20px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.contact-btn:hover { background: #cc5830; }
+
+.loader { text-align: center; margin-top: 5rem; font-size: 1.5rem; color: var(--secondary); }
+
+.shop-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+}
+
+.shop-info h3 { margin: 0 0 0.5rem 0; color: var(--primary); }
+.shop-info p { margin: 0.2rem 0; }
+
+/* ======================================================
+   MOBILE CURVED BOTTOM NAV
+   ====================================================== */
+
+/* Hide by default (desktop & tablet) */
+.bottom-nav,
+.message-btn {
+  display: none;
+}
+
+/* --- Bottom Navbar --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+}
+
+/* SVG border */
+.bottom-nav svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Nav links container */
+.nav-links {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+/* Nav icons */
+.nav-links a {
+  color: var(--text-dark);
+  font-size: 1.4rem;
+  width: 50px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+/* --- Floating Messages Button --- */
+.message-btn {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  border: 2px solid var(--primary);
+  z-index: 1000;
+}
+
+/* Badge */
+.message-btn .badge {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= MOBILE ONLY ================= */
+@media (max-width:770px) {
+
+  /* Show curved nav ONLY on mobile */
+  .bottom-nav,
+  .message-btn {
+    display: flex;
+  }
+
+  body {
+    padding-bottom: 95px;
+  }
+
+  nav .links {
+    display: none;
+  }
+
+  /* Products → 2 per row */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products {
+    padding: 1rem;
+  }
+  .sign-up{
+     border:none;
+     background-color:var(--primary);
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Back</a>
+  <h1>Product Details</h1>
+  <span></span>
+</header>
+
+<div class="container" id="productContainer">
+  <div class="loader">Loading product...</div>
+</div>
+
+<!-- ===== MOBILE BOTTOM NAV ===== -->
+<div class="bottom-nav">
+  <svg viewBox="0 0 400 50" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 H120 Q200 100 280 0 H450 V70 H0 Z"
+          fill="rgb(240, 237, 97)"
+          stroke="black"
+          stroke-width="0"/>
+  </svg>
+
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <a href="category.html"><i class="fas fa-layer-group"></i></a>
+    <div style="width:60px"></div>
+    <a href="search.html"><i class="fas fa-search"></i></a>
+    <a href="account.html"><i class="fas fa-user"></i></a>
+  </div>
+</div>
+
+<div class="message-btn">
+  <i class="fas fa-comment"></i>
+  <span class="badge">3</span>
+</div>
+
+<script>
+// ===== TOKEN PROTECTION =====
+const token = localStorage.getItem('token');
+if(!token){
+    alert('Login required to view this page.');
+    window.location.href = 'login.html';
+}
+
+// ===== GET PRODUCT ID FROM URL =====
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('product');
+if(!productId){
+  document.getElementById('productContainer').innerHTML = '<p>Product not found.</p>';
+}
+
+// ===== FETCH PRODUCT DATA =====
+async function fetchProduct(){
+  try {
+    const res = await fetch(`https://campusbackend-bq3r.onrender.com/api/public/products/${productId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if(res.status === 401){
+        alert('Session expired. Please login again.');
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    if(!res.ok){
+      document.getElementById('productContainer').innerHTML = '<p>Product not found.</p>';
+      return;
+    }
+
+    const product = await res.json();
+
+    // Build HTML
+    let html = `
+      <img src="${product.images[0]?.url}" alt="${product.name}">
+      <h2>${product.name}</h2>
+      <p class="price">Price: KES ${product.price.toLocaleString()}</p>
+      <p><strong>Category:</strong> ${product.category}</p>
+      <p><strong>Description:</strong> ${product.description}</p>
+      <p><strong>Seller:</strong> ${product.seller.name} (${product.seller.email})</p>
+      <a class="contact-btn" href="mailto:${product.seller.email}?subject=Inquiry about ${product.name}">Contact Seller</a>
+    `;
+
+    // Include shop info if available
+    if(product.shop){
+      html += `
+      <div class="shop-info">
+        <h3>Shop Info</h3>
+        <p><strong>Name:</strong> ${product.shop.name}</p>
+        <p><strong>Email:</strong> ${product.shop.email || 'N/A'}</p>
+        <p><strong>Description:</strong> ${product.shop.description || 'N/A'}</p>
+      </div>
+      `;
+    }
+
+    document.getElementById('productContainer').innerHTML = html;
+
+  } catch(err){
+    console.error(err);
+    document.getElementById('productContainer').innerHTML = '<p>Failed to load product.</p>';
+  }
+}
+
+fetchProduct();
+</script>
+
+</body>
+</html>

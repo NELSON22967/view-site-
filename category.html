@@ -238,7 +238,7 @@ footer { background:#111; color:#fff; padding:2rem; text-align:center; }
     <a href="index.html"><i class="fas fa-home"></i></a>
     <a href="category.html"><i class="fas fa-layer-group"></i></a>
     <div style="width:60px"></div>
-    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    <a href="search.html"><i class="fas fa-search"></i></a>
     <a href="account.html"><i class="fas fa-user"></i></a>
   </div>
 </div>
@@ -282,22 +282,30 @@ function renderProducts(list) {
     const card = document.createElement("div");
     card.classList.add("product-card");
     card.innerHTML = `
-      <img src="${img}">
+      <img src="${img}" onclick="handleproductroute('${p._id}')">
       <div class="product-info">
         <h4>${p.name}</h4>
         <p>KES ${p.price}</p>
       </div>
       <div class="product-actions">
-        <button class="cart-btn" onclick="handleCart('${p._id}')">
-          <i class="fas fa-cart-plus"></i>
-        </button>
+        
         <button class="chat-btn" onclick="handleChat('${p.seller._id}', '${p._id}')">
-          <i class="fas fa-comment"></i>
+         <span> <i class="fas fa-comment"></i>contact</span>
         </button>
       </div>
     `;
     grid.appendChild(card);
   });
+}
+//products view route
+function handleproductroute(id){
+    const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Login required");
+    window.location.href = "login.html";
+    return;
+  }
+  window.location.href = `view.html?product=${id}`;
 }
 
 // Filter products

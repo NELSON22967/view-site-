@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #FF6A3D;
+  --secondary: rgb(240, 237, 97);
+  --glass: rgba(255,255,255,0.15);
+  --text-dark: #333;
+  --border-color: #000;
+}
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #fff3e5, #ffe6cc);
+  color: var(--text-dark);
+}
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.search-bar {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.search-bar input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+}
+.search-bar button {
+  padding: 0.7rem 1rem;
+  border: none;
+  background: var(--secondary);
+  color: var(--text-dark);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  transition: 0.3s;
+}
+.search-bar button:hover { background: var(--primary); color: #fff; }
+.category-grid, .products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.category-card, .product-card {
+  flex: 1 1 180px;
+  min-width: 160px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.category-card:hover, .product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--primary);
+}
+.product-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.product-card h4 {
+  margin: 0.5rem 0;
+}
+.product-card p {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+.product-card button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.product-card button:hover { background: var(--secondary); color: var(--text-dark); }
+.loader { text-align: center; margin: 2rem; font-size: 1.2rem; }
+@media (max-width:700px){ .category-card, .product-card{flex:1 1 140px;} }
+/* MOBILE */
+
+
+@media(max-width:770px){
+  #products-display { grid-template-columns:repeat(2,1fr); }
+  .categories { padding:0.5rem; gap:0.5rem; }
+}
+/* ======================================================
+   MOBILE CURVED BOTTOM NAV
+   ====================================================== */
+
+/* Hide by default (desktop & tablet) */
+.bottom-nav,
+.message-btn {
+  display: none;
+}
+
+/* --- Bottom Navbar --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+}
+
+/* SVG border */
+.bottom-nav svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Nav links container */
+.nav-links {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  z-index: 1;
+}
+
+/* Nav icons */
+.nav-links a {
+  color: var(--text-dark);
+  font-size: 1.4rem;
+  width: 50px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+/* --- Floating Messages Button --- */
+.message-btn {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  border: 2px solid var(--primary);
+  z-index: 1000;
+}
+
+/* Badge */
+.message-btn .badge {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= MOBILE ONLY ================= */
+@media (max-width:770px) {
+
+  /* Show curved nav ONLY on mobile */
+  .bottom-nav,
+  .message-btn {
+    display: flex;
+  }
+
+  body {
+    padding-bottom: 95px;
+  }
+
+  nav .links {
+    display: none;
+  }
+
+  /* Products → 2 per row */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products {
+    padding: 1rem;
+  }
+  .sign-up{
+     border:none;
+     background-color:var(--primary);
+  }
+}
+</style>
+</head>
+<body>
+<header>Campus Marketplace</header>
+<div class="container">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search products...">
+    <button id="searchBtn">Search</button>
+  </div>
+  <h3>Categories</h3>
+  <div class="category-grid" id="categoryGrid">
+    <p class="loader">Loading categories...</p>
+  </div>
+  <h3 id="productsTitle" style="margin-top:2rem;">Products</h3>
+  <div class="products-grid" id="productsGrid">
+    <p class="loader">Select a category or search to see products</p>
+  </div>
+</div>
+
+<!-- ===== MOBILE BOTTOM NAV ===== -->
+<div class="bottom-nav">
+  <svg viewBox="0 0 400 50" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 H120 Q200 100 280 0 H450 V70 H0 Z"
+          fill="rgb(240, 237, 97)"
+          stroke="black"
+          stroke-width="0"/>
+  </svg>
+
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <a href="category.html"><i class="fas fa-layer-group"></i></a>
+    <div style="width:60px"></div>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    <a href="account.html"><i class="fas fa-user"></i></a>
+  </div>
+</div>
+
+<div class="message-btn">
+  <i class="fas fa-comment"></i>
+  <span class="badge">3</span>
+</div>
+
+<script>
+// ===== TOKEN PROTECTION =====
+const token = localStorage.getItem('token');
+if(!token){
+  alert('Login required');
+  window.location.href = 'login.html';
+}
+
+// ===== FETCH PRODUCTS FROM BACKEND =====
+let allProducts = [];
+
+async function loadProducts(){
+  try{
+    const res = await fetch('https://campusbackend-bq3r.onrender.com/api/public/products', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if(res.status === 401){
+      alert('Session expired. Login again.');
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const contentType = res.headers.get('content-type');
+    if(!contentType || !contentType.includes('application/json')){
+      console.error('Expected JSON, got:', await res.text());
+      return;
+    }
+
+    const data = await res.json();
+    allProducts = data;
+
+    loadCategories();
+  }catch(err){
+    console.error(err);
+    document.getElementById('categoryGrid').innerHTML='<p class="loader">Failed to load categories.</p>';
+  }
+}
+
+// ===== LOAD UNIQUE CATEGORIES =====
+function loadCategories(){
+  const categoryGrid = document.getElementById('categoryGrid');
+  categoryGrid.innerHTML = '';
+  const categories = [...new Set(allProducts.map(p=>p.category).filter(Boolean))];
+  if(categories.length === 0){
+    categoryGrid.innerHTML = '<p class="loader">No categories available.</p>';
+    return;
+  }
+  categories.forEach(cat=>{
+    const card = document.createElement('div');
+    card.className = 'category-card';
+    card.textContent = cat;
+    card.addEventListener('click', ()=>showProductsByCategory(cat));
+    categoryGrid.appendChild(card);
+  });
+}
+
+// ===== SHOW PRODUCTS BY CATEGORY =====
+function showProductsByCategory(cat){
+  const productsGrid = document.getElementById('productsGrid');
+  const title = document.getElementById('productsTitle');
+  title.textContent = `Products: ${cat}`;
+  const filtered = allProducts.filter(p=>p.category === cat);
+  renderProducts(filtered);
+}
+
+// ===== SEARCH PRODUCTS =====
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  const term = document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!term) return;
+  const filtered = allProducts.filter(p=>
+    p.name.toLowerCase().includes(term) ||
+    p.description.toLowerCase().includes(term) ||
+    (p.category && p.category.toLowerCase().includes(term))
+  );
+  document.getElementById('productsTitle').textContent = `Search Results: "${term}"`;
+  renderProducts(filtered);
+});
+
+// ===== RENDER PRODUCTS =====
+function renderProducts(products){
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  if(products.length === 0){
+    grid.innerHTML = '<p class="loader">No products found.</p>';
+    return;
+  }
+
+  products.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.id='product-display'
+    const imgSrc = p.images && p.images[0] ? p.images[0].url : '';
+    card.innerHTML = `
+      <img src="${imgSrc}" alt="${p.name}" onclick="viewProduct('${p._id}')">
+      <h4>${p.name}</h4>
+      <p>${p.description}</p>
+      <p>Price: KES ${p.price}</p>
+      <p>Category: ${p.category || 'N/A'}</p>
+      <button onclick="contactSeller('${p.seller.email}')">Contact Seller</button>
+      
+      ${p.shop ? `<p>Shop: ${p.shop.name}</p>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ===== CONTACT SELLER =====
+function contactSeller(email){
+  window.location.href = `mailto:${email}`;
+}
+
+// ===== VIEW PRODUCT PAGE =====
+function viewProduct(id){
+  window.location.href = `view.html?product=${id}`;
+}
+
+// ===== INITIAL LOAD =====
+loadProducts();
+</script>
+</body>
+</html>
