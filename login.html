@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyer Login | Campus Junction</title>
+<title>Seller Login | Campus Junction</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -63,7 +63,7 @@ button:disabled { opacity:0.6; }
 <body>
 
 <div class="login-card">
-  <h2>Buyer Login</h2>
+  <h2>Seller Login</h2>
   <form id="loginForm">
     <div class="form-group">
       <label>Email</label>
@@ -82,7 +82,7 @@ button:disabled { opacity:0.6; }
 </div>
 
 <script>
-const API = "https://campusbackend-bq3r.onrender.com/api/auth/login"; // Backend login endpoint
+const API = "http://localhost:5000/api/auth/login"; // Backend login endpoint
 
 const form = document.getElementById("loginForm");
 
@@ -110,7 +110,7 @@ form.addEventListener("submit", async (e) => {
     if (!res.ok) throw new Error(data.message || "Login failed");
 
     // Save JWT token
-    localStorage.setItem("sellerToken", data.token);
+    localStorage.setItem("token", data.token);
 
     alert("Login successful!");
     window.location.href = "index.html";
@@ -127,7 +127,3 @@ form.addEventListener("submit", async (e) => {
 
 </body>
 </html>
-
-
-
-
