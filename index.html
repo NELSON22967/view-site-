@@ -1,535 +1,184 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campus Junction</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-
-<!-- Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-/* ================= DESIGN SYSTEM ================= */
-:root {
-  --primary: #FF6A3D;
-  --secondary: rgb(240, 237, 97);
-  --glass: rgba(255,255,255,0.15);
-  --text-dark: #333;
-  --border-color: #000;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-}
-
-body {
-  background: #f5f5f5;
-  color: var(--text-dark);
-}
-
-/* ================= TOP NAV ================= */
-nav {
-  position: sticky; /* Sticky navbar */
-  top: 0;
-  background: #fff;
-  padding: 0.7rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle shadow for visibility */
-}
-
-nav .logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-nav .links {
-  display: flex;
-  gap: 1rem;
-}
-
-nav .links a {
-  text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 600;
-}
-
-nav .search {
-  display: flex;
-  gap: 0.5rem;
-}
-
-nav input {
-  padding: 0.4rem 0.6rem;
-}
-
-nav button {
-  padding: 0.45rem 0.8rem;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-/* ================= HERO ================= */
-.hero {
-  height: auto;
-  background: linear-gradient(120deg, var(--primary), var(--secondary));
-  color: #fff;
- text-align: center;
- padding:2px;
-  
-}
-
-/* ================= PRODUCTS ================= */
-.products {
-  padding: 2rem;
-}
-
-.products h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  margin-bottom: 1rem;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.card {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.card img {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-}
-
-.card .info {
-  padding: 0.8rem;
-}
-
-.card .price {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-/* ================= FOOTER ================= */
-footer {
-  background: #111;
-  color: #fff;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* ======================================================
-   MOBILE CURVED BOTTOM NAV
-   ====================================================== */
-
-/* Hide by default (desktop & tablet) */
-.bottom-nav,
-.message-btn {
-  display: none;
-}
-
-/* --- Bottom Navbar --- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 70px;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 900;
-}
-
-/* SVG border */
-.bottom-nav svg {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-/* Nav links container */
-.nav-links {
-  position: fixed;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  z-index: 1;
-}
-
-/* Nav icons */
-.nav-links a {
-  color: var(--text-dark);
-  font-size: 1.4rem;
-  width: 50px;
-  text-align: center;
-  transition: 0.3s;
-}
-
-.nav-links a:hover {
-  color: var(--primary);
-}
-
-/* --- Floating Messages Button --- */
-.message-btn {
-  position: fixed;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--primary);
-  font-size: 1.5rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  border: 2px solid var(--primary);
-  z-index: 1000;
-}
-
-/* Badge */
-.message-btn .badge {
-  position: fixed;
-  top: 5px;
-  right: 5px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: red;
-  color: #fff;
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ================= MOBILE ONLY ================= */
-@media (max-width:770px) {
-
-  /* Show curved nav ONLY on mobile */
-  .bottom-nav,
-  .message-btn {
-    display: flex;
-  }
-
-  body {
-    padding-bottom: 95px;
-  }
-
-  nav .links {
-    display: none;
-  }
-
-  /* Products → 2 per row */
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .products {
-    padding: 1rem;
-  }
-  .sign-up{
-     border:none;
-     background-color:var(--primary);
-  }
-}
-
- /* Adds styling */
-:root {
-  --glass-bg: rgba(255,255,255,0.15);
-  --neon: #00ffe0;
-  --neon-pink: #ff4fd8;
-}
-
-
-
-/* ===== SLIDER ===== */
-.slider {
-  position: relative;
-  max-width: 1100px;
-  margin:2rem auto 2rem;
-  border-radius: 18px;
-  overflow: hidden;
-  backdrop-filter: blur(14px);
-  background: var(--glass-bg);
-  box-shadow:
-    0 0 40px rgba(0,255,224,0.15),
-    inset 0 0 0 1px rgba(255,255,255,0.15);
-    margin-bottom:9px;
-}
-
-.slides {
-  position: relative;
-  height: 320px;
-}
-
-.slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: scale(1.08);
-  transition: opacity .8s ease, transform 1.2s ease;
-}
-
-.slide.active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.slide img,
-.slide video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.slide video {
-  pointer-events: none;
-}
-
-/* ===== OVERLAY TEXT ===== */
-.slide-text {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  padding: 14px 18px;
-  border-radius: 14px;
-  background: rgba(0,0,0,.45);
-  color: #fff;
-  font-size: 1.1rem;
-  box-shadow: 0 0 20px rgba(0,255,224,.4);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all .8s ease;
-}
-
-.slide.active .slide-text {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* ===== NAV ===== */
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: none;
-  font-size: 2rem;
-  background: rgba(0,0,0,.5);
-  color: white;
-  cursor: pointer;
-  z-index: 5;
-}
-
-.prev { left: 14px; }
-.next { right: 14px; }
-
-/* ===== DOTS ===== */
-.dots {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.4);
-  cursor: pointer;
-}
-
-.dot.active {
-  background: var(--neon);
-  box-shadow: 0 0 10px var(--neon);
-}
-
-@media (max-width: 700px) {
-  .slides { height: 220px; }
-}
-
-/* ===== EXTRA MOBILE RESPONSIVENESS ===== */
-@media (max-width: 480px) {
-  .slider {
-    margin: 1rem;
-    border-radius: 14px;
-  }
-
-  .slides {
-    height: 180px;
-  }
-
-  .slide-text {
-    font-size: 0.85rem;
-    padding: 10px 12px;
-    bottom: 14px;
-    left: 14px;
-  }
-
-  .nav-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 1.6rem;
-  }
-
-  .dots {
-    bottom: 10px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-  }
-}
-
-@media (max-width: 360px) {
-  .slides { height: 150px; }
-  .slide-text { font-size: 0.75rem; }
-}
-</style>
+<title>Worker Portal - Business Registration</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
+<body class="bg-gray-50">
 
-<body>
-
-<nav>
-  <div class="logo">Campus Junction</div>
-  <div class="links">
-    <a href="#">Home</a>
-    <a href="#">Categories</a>
-    <a href="#">Shops</a>
-    <a href="#">Offers</a>
-  </div>
-  <div class="search">
-    
-    <button class="sign-up" onclick="location.href='login.html'">sign up</button>
-  </div>
-</nav>
-
-<section class="hero">
-  <div>
-    <h1>Campus Deals Made Easy</h1>
-    <p>Shop smart. Shop local.</p>
-    <div class="slider" id="slider">
-  <div class="slides" id="slides"></div>
-  <button class="nav-btn prev">‹</button>
-  <button class="nav-btn next">›</button>
-  <div class="dots" id="dots"></div>
-</div>
-  </div>
-</section>
-
-<section class="products">
-  <h2>Featured Products</h2>
-  <div class="products-grid">
-   
-    </div>
-  </div>
-</section>
-
-<footer>
-  © Campus Junction • All rights reserved
-</footer>
-
-<!-- ===== MOBILE BOTTOM NAV ===== -->
-<div class="bottom-nav">
-  <svg viewBox="0 0 400 50" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 0 H120 Q200 100 280 0 H450 V70 H0 Z"
-          fill="rgb(240, 237, 97)"
-          stroke="black"
-          stroke-width="0"/>
-  </svg>
-
-  <div class="nav-links">
-    <a href="index.html"><i class="fas fa-home"></i></a>
-    <a href="category.html"><i class="fas fa-layer-group"></i></a>
-    <div style="width:60px"></div>
-    <a href="search.html"><i class="fas fa-search"></i></a>
-    <a href="account.html"><i class="fas fa-user"></i></a>
-  </div>
-</div>
-
-<div class="message-btn">
-  <i class="fas fa-comment"></i>
-  <span class="badge">3</span>
-</div>
 <script>
-const API_BASE = "https://campusbackend-bq3r.onrender.com/api/public";
+// GET URL PARAMS
+function getParam(name){ return new URLSearchParams(window.location.search).get(name); }
+let step = getParam('step') || 'login';
+let type = getParam('type') || localStorage.getItem('currentType') || '';
+if(type) localStorage.setItem('currentType', type);
+let regData = JSON.parse(localStorage.getItem('regData') || '{}');
+</script>
 
-let LAST_PRODUCTS_HASH = "";
+<!-- LOGIN PAGE -->
+<div id="page-login" class="hidden min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm">
+    <h1 class="text-2xl font-bold">Worker Login</h1>
+    <p class="text-gray-500 mb-6 text-sm">Business Registration</p>
+    <input id="workerName" placeholder="Worker Name" class="w-full p-3 border rounded-xl mb-3">
+    <input id="workerPhone" placeholder="Phone / ID" class="w-full p-3 border rounded-xl mb-4">
+    <button onclick="doLogin()" class="w-full bg-black text-white p-3 rounded-xl font-bold">Login</button>
+  </div>
+</div>
 
-async function loadProducts() {
-  try {
-    const res = await fetch(`${API_BASE}/products`, {
-      headers: { "Accept": "application/json" }
-    });
+<!-- DASHBOARD PAGE -->
+<div id="page-dashboard" class="hidden p-4 max-w-5xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-xl font-bold">Hi, <span id="wName"></span> 👋</h1>
+    <button onclick="doLogout()" class="text-sm bg-white px-3 py-1 rounded-full shadow">Logout</button>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-white p-4 rounded-2xl shadow"><p class="text-[11px] text-gray-500">TODAY</p><p class="text-2xl font-bold" id="counter">0/30</p><div class="w-full bg-gray-200 h-2 rounded mt-2"><div id="progress" class="bg-green-500 h-2 rounded" style="width:0%"></div></div></div>
+    <div class="bg-white p-4 rounded-2xl shadow"><p class="text-[11px] text-gray-500">REMAINING</p><p class="text-2xl font-bold" id="remain">30</p></div>
+    <div class="bg-white p-4 rounded-2xl shadow"><p class="text-[11px] text-gray-500">TOTAL</p><p class="text-2xl font-bold" id="totalDone">0</p></div>
+    <div class="bg-white p-4 rounded-2xl shadow"><p class="text-[11px] text-gray-500">DAILY TARGET</p><p class="text-2xl font-bold">30</p></div>
+  </div>
+  <h2 class="font-bold mb-3">Register New Business</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+    <a href="?step=1&type=shop" class="bg-white p-6 rounded-2xl shadow text-center hover:bg-black hover:text-white transition block"><div class="text-3xl">🏪</div><p class="font-bold mt-2">SHOP</p></a>
+    <a href="?step=1&type=salon" class="bg-white p-6 rounded-2xl shadow text-center hover:bg-black hover:text-white transition block"><div class="text-3xl">💈</div><p class="font-bold mt-2">SALON</p></a>
+    <a href="?step=1&type=boda" class="bg-white p-6 rounded-2xl shadow text-center hover:bg-black hover:text-white transition block"><div class="text-3xl">🏍️</div><p class="font-bold mt-2">BODA</p></a>
+    <a href="?step=1&type=rentals" class="bg-white p-6 rounded-2xl shadow text-center hover:bg-black hover:text-white transition block"><div class="text-3xl">🏠</div><p class="font-bold mt-2">RENTALS</p></a>
+  </div>
+  <h2 class="font-bold mb-3">My Registered Businesses - Reviews</h2>
+  <div class="bg-white rounded-2xl shadow overflow-x-auto">
+    <table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-3 text-left">Business</th><th class="p-3">Type</th><th class="p-3">Owner</th><th class="p-3">Status</th></tr></thead><tbody id="tableBody"></tbody></table>
+  </div>
+</div>
 
-    if (!res.ok) throw new Error("Failed to fetch products");
+<!-- STEP 1 PAGE -->
+<div id="page-step1" class="hidden p-4"><div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow mt-10">
+  <div class="flex justify-between mb-4"><span class="bg-black text-white text-xs px-2 py-1 rounded">STEP 1/5</span><span class="text-xs text-gray-500" id="type1"></span></div>
+  <h1 class="font-bold text-xl mb-4">Business Owner Info</h1>
+  <input id="owner_name" placeholder="Owner Full Name*" class="w-full p-3 border rounded-xl mb-3">
+  <input id="id_number" placeholder="ID Number*" class="w-full p-3 border rounded-xl mb-3">
+  <input id="kra_pin" placeholder="KRA PIN" class="w-full p-3 border rounded-xl mb-3">
+  <input id="phone" placeholder="Phone Number*" class="w-full p-3 border rounded-xl mb-3">
+  <input id="email" placeholder="Email (optional)" class="w-full p-3 border rounded-xl mb-3">
+  <a id="next1" href="#" class="block text-center w-full bg-black text-white p-3 rounded-xl font-bold">Next →</a>
+  <a href="?step=dashboard" class="block text-center mt-3 text-sm text-gray-500">← Back to Dashboard</a>
+</div></div>
 
-    const products = await res.json();
+<!-- STEP 2 PAGE -->
+<div id="page-step2" class="hidden p-4"><div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow mt-10">
+  <div class="flex justify-between mb-4"><span class="bg-black text-white text-xs px-2 py-1 rounded">STEP 2/5</span><span class="text-xs text-gray-500" id="type2"></span></div>
+  <h1 class="font-bold text-xl mb-4">Business Info</h1>
+  <input id="business_name" placeholder="Business Name*" class="w-full p-3 border rounded-xl mb-3">
+  <div id="dynamicFields"></div>
+  <div class="flex gap-2 mt-4"><a href="?step=1&type=" id="back2" class="w-1/2 border p-3 rounded-xl text-center">← Back</a><a id="next2" href="#" class="w-1/2 bg-black text-white p-3 rounded-xl text-center font-bold">Next →</a></div>
+</div></div>
 
-    // Detect changes
-    const hash = JSON.stringify(
-      products.map(p => ({
-        id: p._id,
-        price: p.price,
-        img: p.images?.[0]?.url
-      }))
-    );
+<!-- STEP 3 PAGE -->
+<div id="page-step3" class="hidden p-4"><div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow mt-10">
+  <div class="mb-4"><span class="bg-black text-white text-xs px-2 py-1 rounded">STEP 3/5</span></div>
+  <h1 class="font-bold text-xl mb-4">Remarks</h1>
+  <textarea id="remarks" placeholder="Worker remarks / notes..." class="w-full p-3 border rounded-xl h-24 mb-3"></textarea>
+  <label class="flex items-center gap-2 mb-6"><input type="checkbox" id="operational" checked> Business Operational?</label>
+  <div class="flex gap-2"><a href="?step=2" id="back3" class="w-1/2 border p-3 rounded-xl text-center">← Back</a><a id="next3" href="#" class="w-1/2 bg-black text-white p-3 rounded-xl text-center font-bold">Next →</a></div>
+</div></div>
 
-    if (hash === LAST_PRODUCTS_HASH) return;
-    LAST_PRODUCTS_HASH = hash;
+<!-- STEP 4 PAGE -->
+<div id="page-step4" class="hidden p-4"><div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow mt-10">
+  <div class="mb-4"><span class="bg-black text-white text-xs px-2 py-1 rounded">STEP 4/5</span></div>
+  <h1 class="font-bold text-xl mb-4">Email Confirmation</h1>
+  <div id="summary" class="bg-gray-100 p-4 rounded-xl mb-4 text-sm"></div>
+  <input id="otp" placeholder="Enter OTP sent to owner email" class="w-full p-3 border rounded-xl mb-3">
+  <button onclick="alert('OTP Sent to '+regData.email)" class="w-full border p-3 rounded-xl mb-4 text-sm">Resend Email Confirmation</button>
+  <div class="flex gap-2"><a href="?step=3" class="w-1/2 border p-3 rounded-xl text-center">← Back</a><a id="next4" href="#" class="w-1/2 bg-black text-white p-3 rounded-xl text-center font-bold">Verify →</a></div>
+</div></div>
 
-    const grid = document.querySelector(".products-grid");
-    grid.innerHTML = "";
+<!-- STEP 5 PAGE -->
+<div id="page-step5" class="hidden p-4"><div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow mt-5">
+  <div class="mb-4"><span class="bg-black text-white text-xs px-2 py-1 rounded">STEP 5/5</span></div>
+  <h1 class="font-bold text-xl mb-3">Map Location</h1>
+  <div id="map" style="height:280px" class="rounded-xl border mb-3"></div>
+  <input id="landmark" placeholder="Landmark description (near church, market...)" class="w-full p-3 border rounded-xl mb-4">
+  <button onclick="finishRegistration()" class="w-full bg-green-600 text-white p-3 rounded-xl font-bold">✅ REGISTER BUSINESS</button>
+  <a href="?step=4" class="block text-center mt-3 text-sm text-gray-500">← Back</a>
+</div></div>
 
-    products.forEach(product => {
-           console.log(product)
-      const imgSrc = product.images?.length
-        ? product.images[0].url
-        : "https://picsum.photos/300/200";
+<script>
+let registrations = JSON.parse(localStorage.getItem('regs')||'[]');
+let lat=0.2827,lng=34.7519, map, marker;
 
-      grid.innerHTML += `
-        <div class="card">
-          <img  onclick="handleproductroute('${product._id}')" src="${imgSrc}">
-          <div class="info">
-            <h4>${product.name}</h4>
-            <p class="price">KES ${product.price}</p>
-            <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
-             <button onclick="handleContactSeller('${product.seller?._id}')"
-                style="flex:1;padding:6px;background:#333;color:#fff;border:none;border-radius:6px;">
-                💬 Contact
-              </button>
-            </div>
+function showPage(){
+  document.querySelectorAll('[id^=page-]').forEach(p=>p.classList.add('hidden'));
+  if(step=='login'){ document.getElementById('page-login').classList.remove('hidden'); }
+  else if(step=='dashboard'){ document.getElementById('page-dashboard').classList.remove('hidden'); updateDashboard(); }
+  else{ document.getElementById('page-step'+step).classList.remove('hidden'); loadStep(step); }
+}
+showPage();
+
+function doLogin(){
+  localStorage.setItem('worker', document.getElementById('workerName').value||'Worker');
+  location.href='?step=dashboard';
+}
+function doLogout(){ location.href='?step=login'; }
+
+function updateDashboard(){
+  document.getElementById('wName').innerText = localStorage.getItem('worker')||'Worker';
+  document.getElementById('counter').innerText = registrations.length+'/30';
+  document.getElementById('remain').innerText = 30-registrations.length;
+  document.getElementById('totalDone').innerText = registrations.length;
+  document.getElementById('progress').style.width = (registrations.length/30*100)+'%';
+  let html=''; registrations.slice().reverse().forEach(r=>{ html+=`<tr class="border-t"><td class="p-3">${r.business_name}</td><td class="p-3">${r.type}</td><td class="p-3">${r.owner_name}</td><td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Done</span></td></tr>`});
+  if(!html) html='<tr><td colspan=4 class="p-6 text-center text-gray-400">No businesses yet - click tiles above</td></tr>';
+  document.getElementById('tableBody').innerHTML=html;
+}
+
+function loadStep(n){
+  document.getElementById('type1')?.innerText && (document.getElementById('type1').innerText = type.toUpperCase());
+  if(n==1){
+    document.getElementById('owner_name').value = regData.owner_name||''; document.getElementById('id_number').value=regData.id_number||''; document.getElementById('kra_pin').value=regData.kra_pin||''; document.getElementById('phone').value=regData.phone||''; document.getElementById('email').value=regData.email||'';
+    document.getElementById('next1').onclick = ()=>{ regData.owner_name=owner_name.value; regData.id_number=id_number.value; regData.kra_pin=kra_pin.value; regData.phone=phone.value; regData.email=email.value; saveAndGo(2); return false; };
+  }
+  if(n==2){
+    document.getElementById('type2').innerText = type.toUpperCase(); document.getElementById('back2').href='?step=1&type='+type; document.getElementById('business_name').value=regData.business_name||'';
+    let html=''; if(type=='shop') html=`<select id="shop_type" class="w-full p-3 border rounded-xl mb-3"><option>Retail Shop</option><option>Wholesale</option><option>Hardware</option><option>Grocery</option></select><input id="product" placeholder="Products sold" class="w-full p-3 border rounded-xl mb-3">`;
+    if(type=='salon') html=`<select id="salon_type" class="w-full p-3 border rounded-xl mb-3"><option>Barbershop</option><option>Beauty Salon</option><option>Unisex</option></select><input id="seats" type="number" placeholder="Number of Seats" class="w-full p-3 border rounded-xl mb-3">`;
+    if(type=='boda') html=`<input id="number_plate" placeholder="Number Plate*" class="w-full p-3 border rounded-xl mb-3"><input id="stage" placeholder="Stage Name" class="w-full p-3 border rounded-xl mb-3"><input id="sacco" placeholder="SACCO Name" class="w-full p-3 border rounded-xl mb-3">`;
+    if(type=='rentals') html=`<input id="plot_name" placeholder="Plot/Building Name" class="w-full p-3 border rounded-xl mb-3"><input id="units" type="number" placeholder="No. of Units" class="w-full p-3 border rounded-xl mb-3"><input id="rent" placeholder="Rent per Unit" class="w-full p-3 border rounded-xl mb-3">`;
+    document.getElementById('dynamicFields').innerHTML=html;
+    // fill saved
+    setTimeout(()=>{ Object.keys(regData).forEach(k=>{ let el=document.getElementById(k); if(el) el.value=regData[k]; }); },100);
+    document.getElementById('next2').onclick = ()=>{ regData.business_name=document.getElementById('business_name').value; regData.type=type; document.querySelectorAll('#dynamicFields input, #dynamicFields select').forEach(el=>{ regData[el.id]=el.value }); saveAndGo(3); return false; };
+  }
+  if(n==3){
+    document.getElementById('remarks').value=regData.remarks||''; document.getElementById('back3').href='?step=2&type='+type;
+    document.getElementById('next3').onclick = ()=>{ regData.remarks=remarks.value; regData.operational=document.getElementById('operational').checked; saveAndGo(4); return false; };
+  }
+  if(n==4){
+    document.getElementById('summary').innerHTML=`<b>${regData.business_name||''}</b><br>Owner: ${regData.owner_name||''}<br>ID: ${regData.id_number||''}<br>Phone: ${regData.phone||''}<br>Type: ${regData.type||''}<br>Remarks: ${regData.remarks||'-'}`;
+    document.getElementById('next4').href='?step=5&type='+type;
+  }
+  if(n==5){ setTimeout(initMap,400); }
+}
+function saveAndGo(next){ localStorage.setItem('regData', JSON.stringify(regData)); location.href='?step='+next+'&type='+type; }
+
+function initMap(){
+  if(map){ map.invalidateSize(); return; }
+  map=L.map('map').setView([lat,lng],14); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  marker=L.marker([lat,lng],{draggable:true}).addTo(map); marker.on('dragend', e=>{lat=e.target.getLatLng().lat; lng=e.target.getLatLng().lng;});
+  map.locate({setView:true,maxZoom:16}); map.on('locationfound', e=>{lat=e.latlng.lat; lng=e.latlng.lng; marker.setLatLng(e.latlng);});
+}
+function finishRegistration(){
+  regData.lat=lat; regData.lng=lng; regData.landmark=document.getElementById('landmark').value; regData.date=new Date().toLocaleString();
+  registrations.push(regData); localStorage.setItem('regs', JSON.stringify(registrations));
+  localStorage.removeItem('regData'); localStorage.removeItem('currentType');
+  alert('✅ '+regData.business_name+' Registered Successfully!'); location.href='?step=dashboard';
+}
+</script>
+</body>
+</html>        </div>
           </div>
         </div>
       `;
